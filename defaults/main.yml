@@ -1,0 +1,39 @@
+---
+
+# Docker project variables
+
+gluetun_project_name: gluetun
+
+
+# Gluetun project variables
+
+gluetun_version: latest
+
+# Gluetun port mappings
+gluetun_ports:
+  # - "8888:8888/tcp # HTTP proxy"
+  # - "8388:8388/tcp # Shadowsocks"
+  # - "8388:8388/udp # Shadowsocks"
+  # - "9091:9091/tcp # Transmission Web UI"
+  # - "51413:51413/tcp # BitTorrent protocol"
+  # - "51413:51413/udp # BitTorrent protocol"
+
+# Gluetun environment variables
+gluetun_environment:
+  # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
+  VPN_SERVICE_PROVIDER: example
+  VPN_TYPE: # openvpn | wireguard
+
+  # OpenVPN:
+  # OPENVPN_USER:
+  # OPENVPN_PASSWORD:
+  # ...
+
+  # Wireguard:
+  # WIREGUARD_PRIVATE_KEY:
+  # WIREGUARD_ADDRESSES:
+  # ...
+
+  # Server list updater
+  # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/servers.md#update-the-vpn-servers-list
+  # UPDATER_PERIOD: 24h

@@ -1,0 +1,41 @@
+#jinja2: trim_blocks: True, lstrip_blocks: True
+# {{ ansible_managed }}
+# {{ template_fullpath | regex_replace('^' ~ role_path, role_path | basename) }}
+
+name: {{ docker_project_slug }}
+
+services:
+
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: {{ docker_project_slug }}
+    restart: {{ docker_project_restart }}
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+
+    {% if docker_project_network_mode == 'bridge' %}
+    ports:
+      {% for port_mapping in gluetun_ports | default([], true) %}
+      - {{ port_mapping }}
+      {% endfor %}
+    {% endif %}
+
+    {{ docker_project_service_additional_options | indent(4) }}
+
+    volumes:
+      - ./config:/gluetun
+
+    environment:
+      # Timezone for accurate log times
+      - TZ={{ timezone | default('UTC') }}
+      #
+      {% for item in gluetun_environment | default({}, true) | dict2items %}
+      - {{ item.key }}={{ item.value }}
+      {% endfor %}
+
+    {% if docker_project_service_additional_labels %}
+    labels:
+      {{ docker_project_service_additional_labels | indent(6) }}
+    {% endif %}
