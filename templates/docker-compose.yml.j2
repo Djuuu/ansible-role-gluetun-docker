@@ -25,7 +25,7 @@ services:
     {{ docker_project_service_additional_options | indent(4) }}
 
     volumes:
-      - ./config:/gluetun
+      - ./gluetun:/gluetun
 
     environment:
       # Timezone for accurate log times
