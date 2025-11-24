@@ -15,7 +15,8 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
 
-    {% if docker_project_network_mode == 'bridge' %}
+    {% if docker_project_network_mode == 'bridge'
+      and gluetun_ports | default([], true) | length > 0 %}
     ports:
       {% for port_mapping in gluetun_ports | default([], true) %}
       - {{ port_mapping }}
