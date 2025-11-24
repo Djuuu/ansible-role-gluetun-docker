@@ -87,6 +87,39 @@ Example Playbook
     - djuuu.gluetun_docker
 ```
 
+### Integration in other projects
+
+The `template_service` task will register a `gluetun_service_yaml` variable that can be used in other projects:
+
+* `example_playbook.yml`
+  ```yaml
+  - hosts: example
+    gather_facts: false
+
+    pre_tasks:
+      - name: Template Gluetun service yaml
+        ansible.builtin.include_role:
+          name: djuuu.gluetun_docker
+          tasks_from: template_service
+
+    roles:
+      - example_docker_role
+  ```
+
+* `example_docker_role/templates/docker-compose.yml.j2`
+  ```yaml
+  services:
+
+    example:
+      # ...
+      network_mode: "service:gluetun"
+      depends_on:
+        gluetun: { condition: service_healthy, restart: true }
+      # ...
+
+    {{ gluetun_service_yaml | default('') | indent(2) }}
+  ```
+
 License
 -------
 
