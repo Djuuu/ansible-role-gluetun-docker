@@ -5,4 +5,4 @@
     gluetun_compose_data: "{{ lookup('ansible.builtin.template', 'docker-compose.yml.j2') | from_yaml }}"
     gluetun_service: { gluetun: "{{ gluetun_compose_data.services.gluetun }}" }
   ansible.builtin.set_fact:
-    gluetun_service_yaml: "{{ gluetun_service | to_nice_yaml(indent=2,sort_keys=false) }}"
+    gluetun_service_yaml: "{{ gluetun_service | to_nice_yaml(indent=2, sort_keys=false) }}"
